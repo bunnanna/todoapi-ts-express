@@ -1,0 +1,9 @@
+.git*
+*drawio*
+node_modules
+dist/
+.prettierrc
+.env
+.dockerignore
+Dockerfile
+*.md
