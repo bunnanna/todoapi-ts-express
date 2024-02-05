@@ -16,6 +16,7 @@ services:
     environment:
       - PORT=8080
       - DATABASE_URL=postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${POSTGRES_HOST}:${POSTGRES_PORT}/${POSTGRES_DB}?schema=public
+      - JWT_SECRET=${JWT_SECRET}
     ports:
       - 8080:8080
     depends_on:
