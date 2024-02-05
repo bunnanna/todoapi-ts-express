@@ -10,9 +10,16 @@ const USER_SELECT = {
 };
 
 export interface IUserRepository
-	extends IRepository<User, Omit<User, "password">> {}
+	extends IRepository<User, Omit<User, "password">> {
+	getOneByEmail: (email: string) => Promise<User>;
+}
 class UserRepository implements IUserRepository {
 	constructor(private user: PrismaClient["user"]) {}
+	getOneByEmail: IUserRepository["getOneByEmail"] = (email) => {
+		return this.user.findFirstOrThrow({
+			where: { email },
+		});
+	};
 	getAll: IUserRepository["getAll"] = async () => {
 		return this.user.findMany({
 			select: USER_SELECT,
