@@ -2,6 +2,8 @@ import cookieParser from "cookie-parser";
 import { config } from "dotenv";
 import express from "express";
 import "express-async-errors";
+import { jwtMiddleware } from "./Middlewares/JwtMiddleware";
+import userRouter from "./Routers/User";
 
 config();
 
@@ -15,5 +17,7 @@ app.use(jwtMiddleware.decodeJWT);
 app.get("/", (req, res) => {
 	res.status(200).send("Server is running.").end();
 });
+
+app.use("/user", userRouter);
 
 app.listen(PORT, () => console.log(`Server running at ${PORT}`));

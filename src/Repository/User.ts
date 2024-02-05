@@ -1,6 +1,7 @@
 import { PrismaClient, User } from "@prisma/client";
 import { IRepository } from ".";
 import { prisma } from "../configs/db";
+import { ReqUserDTO, ResUserDTO } from "../dto/user";
 
 const USER_SELECT = {
 	userId: true,
@@ -9,8 +10,7 @@ const USER_SELECT = {
 	email: true,
 };
 
-export interface IUserRepository
-	extends IRepository<User, Omit<User, "password">> {
+export interface IUserRepository extends IRepository<ReqUserDTO, ResUserDTO> {
 	getOneByEmail: (email: string) => Promise<User>;
 }
 class UserRepository implements IUserRepository {
