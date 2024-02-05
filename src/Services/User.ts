@@ -3,7 +3,7 @@ import { LoginDTO, ReqUserDTO, ResUserDTO } from "../dto/user";
 import { hashPassword, verifyPassword } from "../utils/bcrypt";
 import { jwtHandler } from "../utils/jwt";
 
-interface IUserService {
+export interface IUserService {
 	createUser: (userBody: ReqUserDTO) => Promise<void>;
 	getUserById: (userId: string) => Promise<ResUserDTO>;
 	login: (loginBody: LoginDTO) => Promise<string>;
