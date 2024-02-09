@@ -1,9 +1,9 @@
-import { PrismaClient, User } from "@prisma/client";
+import { Prisma, PrismaClient, User } from "@prisma/client";
 import { IRepository } from ".";
 import { prisma } from "../configs/db";
 import { ReqUserDTO, ResUserDTO } from "../dto/user";
 
-const USER_SELECT = {
+export const USER_SELECT: Prisma.UserSelect = {
 	userId: true,
 	name: true,
 	image: true,
