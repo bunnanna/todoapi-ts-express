@@ -1,7 +1,7 @@
 import { Prisma, PrismaClient } from "@prisma/client";
 import { IRepository } from ".";
 import { prisma } from "../configs/db";
-import { ReqTodoDTO, ResTodoDTO } from "../dto/todo";
+import { CreateTodoDTO, ResTodoDTO, UpdateTodoDto } from "../dto/todo";
 import { USER_SELECT } from "./User";
 
 const TODO_SELECT: Prisma.TodoSelect = {
@@ -11,12 +11,12 @@ const TODO_SELECT: Prisma.TodoSelect = {
 	isCompleted: true,
 	user: { select: USER_SELECT },
 };
-interface ReqTodo extends ReqTodoDTO {
+interface CreateTodo extends CreateTodoDTO {
 	userId: string;
 }
 
 export interface ITodoRepository
-	extends IRepository<ReqTodo, ResTodoDTO, number> {}
+	extends IRepository<CreateTodo, number, ResTodoDTO, UpdateTodoDto> {}
 class TodoRepository implements ITodoRepository {
 	constructor(private todo: PrismaClient["todo"]) {}
 

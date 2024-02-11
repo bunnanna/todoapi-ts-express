@@ -4,6 +4,7 @@ import express from "express";
 import "express-async-errors";
 import morgan from "morgan";
 import { jwtMiddleware } from "./Middlewares/JwtMiddleware";
+import todoRouter from "./Routers/Todo";
 import userRouter from "./Routers/User";
 import { prisma } from "./configs/db";
 
@@ -32,6 +33,7 @@ prisma.$connect().then(() => {
 
 	// router
 	app.use("/user", userRouter);
+	app.use("/todo", todoRouter);
 
 	// start server
 	app.listen(PORT, () => console.log(`Server running at ${PORT}`));
