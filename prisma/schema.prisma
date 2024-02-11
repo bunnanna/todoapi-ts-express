@@ -22,7 +22,7 @@ model User {
 model Todo {
   id          Int      @id @default(autoincrement())
   title       String   @db.VarChar(60)
-  isCompleted Boolean
+  isCompleted Boolean  @default(false)
   CreatedAt   DateTime @default(now())
   user        User     @relation(fields: [userId], references: [userId])
   userId      String   @db.Uuid
