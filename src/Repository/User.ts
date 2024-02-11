@@ -10,7 +10,8 @@ export const USER_SELECT: Prisma.UserSelect = {
 	email: true,
 };
 
-export interface IUserRepository extends IRepository<ReqUserDTO, ResUserDTO> {
+export interface IUserRepository
+	extends IRepository<ReqUserDTO, string, ResUserDTO> {
 	getOneByEmail: (email: string) => Promise<User>;
 }
 class UserRepository implements IUserRepository {

@@ -1,7 +1,12 @@
-export interface IRepository<ReqBody, ResBody = ReqBody, ID = string> {
+export interface IRepository<
+	CreateBody,
+	ID = string,
+	ResBody = CreateBody,
+	UpdateBody = Partial<CreateBody>
+> {
 	getAll: () => Promise<ResBody[]>;
 	getOneById: (id: ID) => Promise<ResBody>;
-	create: (createObject: ReqBody) => Promise<void>;
-	update: (id: ID, UpdateBody: Partial<ReqBody>) => Promise<void>;
+	create: (createObject: CreateBody) => Promise<void>;
+	update: (id: ID, UpdateBody: Partial<UpdateBody>) => Promise<void>;
 	delete: (id: ID) => Promise<void>;
 }
