@@ -1,12 +1,9 @@
-import { ICRUDService } from ".";
 import { ITodoRepository, todoRepository } from "../Repository/Todo";
 import { CreateTodoDTO, ResTodoDTO, UpdateTodoDto } from "../dto/todo";
 
-export interface ITodoService
-	extends Omit<
-		ICRUDService<CreateTodoDTO, ResTodoDTO, number>,
-		"create" | "update" | "delete"
-	> {
+export interface ITodoService {
+	getAll: () => Promise<ResTodoDTO[]>;
+	getById: (id: number) => Promise<ResTodoDTO>;
 	create: (createBody: CreateTodoDTO, userId: string) => Promise<void>;
 	update: (
 		updateBody: Partial<UpdateTodoDto>,
@@ -14,6 +11,7 @@ export interface ITodoService
 		userId: string
 	) => Promise<void>;
 	delete: (id: number, userId: string) => Promise<void>;
+	completed: (id: number, userId: string) => Promise<void>;
 }
 
 class TodoService implements ITodoService {
@@ -40,6 +38,10 @@ class TodoService implements ITodoService {
 	delete: ITodoService["delete"] = async (id, userId) => {
 		if (!(await this.isOwner(id, userId))) new Error("Forbidden");
 		return this.todoRepo.delete(id);
+	};
+	completed: ITodoService["completed"] = async (id, userId) => {
+		if (!(await this.isOwner(id, userId))) new Error("Forbidden");
+		this.todoRepo.setComplete(id);
 	};
 }
 

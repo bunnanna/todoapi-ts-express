@@ -16,7 +16,9 @@ interface CreateTodo extends CreateTodoDTO {
 }
 
 export interface ITodoRepository
-	extends IRepository<CreateTodo, number, ResTodoDTO, UpdateTodoDto> {}
+	extends IRepository<CreateTodo, number, ResTodoDTO, UpdateTodoDto> {
+	setComplete: (id: number) => Promise<void>;
+}
 class TodoRepository implements ITodoRepository {
 	constructor(private todo: PrismaClient["todo"]) {}
 
@@ -49,6 +51,12 @@ class TodoRepository implements ITodoRepository {
 	};
 	delete: ITodoRepository["delete"] = async (id) => {
 		this.todo.delete({
+			where: { id },
+		});
+	};
+	setComplete: ITodoRepository["setComplete"] = async (id) => {
+		this.todo.update({
+			data: { isCompleted: true },
 			where: { id },
 		});
 	};

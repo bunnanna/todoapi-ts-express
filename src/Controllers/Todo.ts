@@ -21,10 +21,23 @@ export interface ITodoController {
 		ILocals
 	>;
 	delete: RequestHandler<{ id: string }, MessageDTO, unknown, unknown, ILocals>;
+	complete: RequestHandler<
+		{ id: string },
+		MessageDTO,
+		unknown,
+		unknown,
+		ILocals
+	>;
 }
 
 class TodoController implements ITodoController {
 	constructor(private service: ITodoService) {}
+	complete: ITodoController["complete"] = async (req, res) => {
+		const id = req.params.id;
+		const userId = res.locals.userId;
+		await this.service.completed(+id, userId);
+		return res.json({ message: "set completed." });
+	};
 
 	createTodo: ITodoController["createTodo"] = async (req, res) => {
 		const createTodoBody = req.body;
@@ -50,7 +63,6 @@ class TodoController implements ITodoController {
 	};
 	delete: ITodoController["delete"] = async (req, res) => {
 		const id = req.params.id;
-		const updateTodoBody = req.body;
 		const userId = res.locals.userId;
 		await this.service.delete(+id, userId);
 		return res.json({ message: "delete completed." });
